@@ -1,63 +1,16 @@
-import header__logo from '../images/header__logo.svg';
-import profile__avatar from '../images/profile__avatar.jpg';
+import React from 'react';
+
+import Header from './Header';
+
+import Main from './Main.js'
+import Footer from './Footer.js';
 
 function App() {
   return (
     <div className="page">
-
-      <header className="header">
-        <a href="#"
-          className="header__link links"
-          title="Переход на главную - проект: место.">
-          <img
-            src={header__logo}
-            alt="Логотип проекта Место"
-            className="header__logo" />
-        </a>
-      </header>
-
-      <main className="main">
-
-
-        <section className="profile">
-          <div className="profile__container">
-            <div className="profile__wrapper-avatar">
-
-              <img
-                src={profile__avatar}
-                alt="Жак-Ив-Кусто. Фотография. Пртрет."
-                className="profile__avatar" />
-              <button
-                type="button"
-                className="profile__avatar-button links"></button>
-            </div>
-            <div className="profile__wrapper">
-              <h1 className="profile__name">forgohill</h1>
-              <p className="profile__mission">quick.action.lab</p>
-              <button
-                type="button"
-                name="button-edit"
-                aria-label="Редактировать профиль"
-                className="profile__btn-edit links"></button>
-            </div>
-          </div>
-          <button
-            type="button"
-            name="button-add"
-            aria-label="Добавить картинку"
-            className="profile__btn-add links"></button>
-        </section>
-
-        <section className="grid-places">
-          <p className="footer__paragraph">КАРТОЧКИ</p>
-        </section>
-
-        <footer className="footer">
-          <p className="footer__paragraph">&#169; 2023 Mesto Russia</p>
-        </footer>
-
-
-      </main >
+      <Header />
+      <Main />
+      <Footer />
 
       {/* popup_opened */}
       {/* ДОБАВИТЬ ПРЕВЬЮ */}
