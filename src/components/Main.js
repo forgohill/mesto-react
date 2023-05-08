@@ -42,7 +42,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
           name="button-add"
           aria-label="Добавить картинку"
           className="profile__btn-add links"
-        // onClick={handleAddPlaceClick}
+          onClick={onAddCard}
         ></button>
       </section>
 

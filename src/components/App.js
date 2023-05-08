@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Header from './Header';
+import Main from './Main'
+import Footer from './Footer';
+import PopupWithForm from './PopupWithForm'
+import ImagePopup from './ImagePopup'
 
-import Main from './Main.js'
-import Footer from './Footer.js';
-import PopupWithForm from './PopupWithForm.js'
 function App() {
 
   // стейты для попапов
@@ -15,10 +16,8 @@ function App() {
 
 
 
-
+  // блок обработчиков кнопок
   const handleEditAvatarClick = () => {
-
-    console.log('click avatar')
     setIsOpenedPopupChangeAvatar(true);
   }
 
@@ -30,7 +29,7 @@ function App() {
     setIsOpenedPopupAddCard(true);
   }
 
-  const closePopups = () => {
+  const closeAllPopups = () => {
     setIsOpenedPopupChangeAvatar(false);
     setIsOpenedPopupEditProfile(false);
     setIsOpenedPopupAddCard(false);
@@ -46,13 +45,9 @@ function App() {
       />
       <Footer />
 
-
-
-
-      {/* popup_opened */}
       {/* ДОБАВИТЬ ПРЕВЬЮ */}
       {/* <div className="popup popup_preview popup_opened"> */}
-      <div className="popup popup_preview">
+      {/* <div className="popup popup_preview">
         <figure className="popup__figure">
           <img
             alt="Место"
@@ -65,7 +60,8 @@ function App() {
             aria-label="Закрыть окно"
             className="popup__close popup__close_edit links"></button>
         </figure>
-      </div>
+      </div> */}
+      {/* <ImagePopup></ImagePopup> */}
 
 
 
@@ -75,7 +71,7 @@ function App() {
         name={"edit"}
         title={"Редактировать профиль"}
         openPopup={isOpenedPopupEditProfile}
-        closePopup={closePopups}
+        closePopup={closeAllPopups}
       >
 
         <input
@@ -102,57 +98,13 @@ function App() {
 
       </PopupWithForm >
 
-      {/* <div className="popup popup_edit popup_opened"> */}
-      {/* <div className="popup popup_edit">
-        <div className="popup__container">
-          <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="popup__form popup__form_edit"
-            name="popupForm"
-            method="post"
-            noValidate>
-            <input
-              id="name"
-              type="text"
-              minLength="2"
-              maxLength="40"
-              name="inputName"
-              placeholder="Имя"
-              className="popup__input popup__input_name" required />
-            <span className="popup__error popup__error_name">
-            </span>
-            <input
-              id="mission"
-              type="text"
-              minLength="2"
-              maxLength="200"
-              name="inputMission"
-              placeholder="О себе"
-              className="popup__input popup__input_mission"
-              required />
-            <span className="popup__error popup__error_mission">
-            </span>
-            <button
-              type="submit"
-              aria-label="Сохранить изменения в профиле"
-              className="popup__submit">Сохранить</button>
-          </form>
-          <button
-            type="button"
-            name="button-close"
-            aria-label="Закрыть окно"
-            className="popup__close popup__close_edit links"
-            onClick={handleEditProfileClick}
-          >
-          </button>
-        </div>
-      </div> */}
 
-
+      {/* ИЗМЕНИТЬ АВАТАР */}
       <PopupWithForm
         name={"avatar"}
         title={"Обновить аватар"}
         openPopup={isOpenedPopupChangeAvatar}
-        closePopup={closePopups}
+        closePopup={closeAllPopups}
       >
         <input
           id="link-avatar"
@@ -165,88 +117,37 @@ function App() {
         </span>
       </PopupWithForm>
 
-      {/* ИЗМЕНИТЬ АВАТАР */}
-      {/* <div className="popup popup_avatar popup_opened"> */}
-      {/* <div className="popup popup_avatar">
-        <div className="popup__container">
-          <h2 className="popup__title">Обновить аватар</h2>
-          <form className="popup__form popup__form_avatar"
-            name="popupForm"
-            method="post"
-            noValidate>
-            <input
-              id="link-avatar"
-              type="url"
-              name="avatarLink"
-              placeholder="Ссылка на картинку"
-              className="popup__input popup__input_link"
-              required />
-            <span className="popup__error popup__error_link-avatar">
-            </span>
-            <button type="submit"
-              aria-label="Добавить карточку с картинкой"
-              className="popup__submit">
-              Сохранить
-            </button>
-          </form>
-          <button
-            type="button"
-            name="button-close"
-            aria-label="Закрыть окно"
-            className="popup__close popup__close_add links"
-            onClick={handleEditAvatarClick}
-          >
-          </button>
-        </div>
-      </div> */}
-
 
 
       {/* ДОБАВИТЬ КАРТОЧКУ */}
-      {/* <div className="popup popup_add popup_opened"> */}
-      <div className="popup popup_add">
-        <div className="popup__container">
-          <h2 className="popup__title">Новое место</h2>
-          <form
-            className="popup__form popup__form_add"
-            name="popupForm"
-            method="post"
-            noValidate>
-            <input
-              id="foto"
-              type="text"
-              minLength="2"
-              maxLength="30"
-              name="inputFoto"
-              placeholder="Название"
-              className="popup__input popup__input_foto"
-              required />
-            <span className="popup__error popup__error_foto">
-            </span>
-            <input
-              id="link"
-              type="url"
-              name="inputLink"
-              placeholder="Ссылка на картинку"
-              className="popup__input popup__input_link"
-              required />
-            <span className="popup__error popup__error_link">
-            </span>
-            <button
-              type="submit"
-              aria-label="Добавить карточку с картинкой"
-              className="popup__submit">
-              Создать
-            </button>
-          </form>
-          <button
-            type="button"
-            name="button-close"
-            aria-label="Закрыть окно"
-            className="popup__close popup__close_add links"
-            onClick={handleAddCardClick}></button>
-        </div>
-      </div>
+      <PopupWithForm
+        name={"add"}
+        title={"Новое место"}
+        openPopup={isOpenedPopupAddCard}
+        closePopup={closeAllPopups}
+      >
+        <input
+          id="foto"
+          type="text"
+          minLength="2"
+          maxLength="30"
+          name="inputFoto"
+          placeholder="Название"
+          className="popup__input popup__input_foto"
+          required />
+        <span className="popup__error popup__error_foto">
+        </span>
+        <input
+          id="link"
+          type="url"
+          name="inputLink"
+          placeholder="Ссылка на картинку"
+          className="popup__input popup__input_link"
+          required />
+        <span className="popup__error popup__error_link">
+        </span>
+      </PopupWithForm>
+
 
       {/* УДАЛИТЬ КАРТОЧКУ */}
       {/* <div className="popup popup_trash popup_opened"> */}
