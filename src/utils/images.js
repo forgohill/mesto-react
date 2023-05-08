@@ -1,9 +1,9 @@
-import header__logo from '../images/header__logo.svg';
-import profile__avatar from '../images/profile__avatar.jpg';
+import headerLogo from '../images/header__logo.svg';
+import profileAvatar from '../images/profile__avatar.jpg';
 
 
 export {
-  header__logo,
-  profile__avatar,
+  headerLogo,
+  profileAvatar,
 };
 

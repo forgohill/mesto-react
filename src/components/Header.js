@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-  header__logo,
-  profile__avatar,
+  headerLogo,
+  profileAvatar,
 } from '../utils/images.js'
 
 
@@ -14,7 +14,7 @@ function Header() {
         className="header__link links"
         title="Переход на главную - проект: место.">
         <img
-          src={header__logo}
+          src={headerLogo}
           alt="Логотип проекта Место"
           className="header__logo" />
       </a>
