@@ -18,9 +18,9 @@ function PopupWithForm({ name, title, openPopup, closePopup, ...props }) {
           name="popupForm"
           method="post"
           noValidate>
-          <>
-            {props.children}
-          </>
+
+          {props.children}
+
           <button
             type="submit"
             aria-label="Сохранить изменения в профиле"

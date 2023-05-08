@@ -7,61 +7,43 @@ import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js'
 function App() {
 
-  const [openedPopupEditProfile, setOpenedPopupEditProfile] = React.useState(false);
+  // стейты для попапов
+  const [isOpenedPopupChangeAvatar, setIsOpenedPopupChangeAvatar] = React.useState(false);
+  const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
+  const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
 
 
 
 
 
   const handleEditAvatarClick = () => {
-    const avatarPopup = document.querySelector('.popup_avatar');
-    console.log(avatarPopup);
-    if (document.querySelector('.popup_opened')) {
-      console.log('CLK__AVATAR_1');
-      avatarPopup.classList.remove('popup_opened');
-    } else {
-      console.log('CLK__AVATAR_2');
-      avatarPopup.classList.add('popup_opened');
-    }
+
+    console.log('click avatar')
+    setIsOpenedPopupChangeAvatar(true);
   }
 
   const handleEditProfileClick = () => {
-
-    // console.log('нажатие Едит')
-    setOpenedPopupEditProfile(true);
-    // const editPopup = document.querySelector('.popup_edit');
-    // console.log(editPopup);
-    // if (document.querySelector('.popup_opened')) {
-    //   console.log('CLK__EDIT_1');
-    //   editPopup.classList.remove('popup_opened');
-    // } else {
-    //   console.log('CLK__EDIT_2');
-    //   editPopup.classList.add('popup_opened');
-    // }
+    setIsOpenedPopupEditProfile(true);
   }
 
-  const handleAddPlaceClick = () => {
-    const addPopup = document.querySelector('.popup_add');
-    console.log(addPopup);
-    if (document.querySelector('.popup_opened')) {
-      console.log('CLK__ADD_1');
-      addPopup.classList.remove('popup_opened');
-    } else {
-      console.log('CLK__ADD_2');
-      addPopup.classList.add('popup_opened');
-    }
+  const handleAddCardClick = () => {
+    setIsOpenedPopupAddCard(true);
   }
 
   const closePopups = () => {
-    setOpenedPopupEditProfile(false);
+    setIsOpenedPopupChangeAvatar(false);
+    setIsOpenedPopupEditProfile(false);
+    setIsOpenedPopupAddCard(false);
   }
 
   return (
     <div className="page">
       <Header />
       <Main
-
-        handleEditProfileClick={handleEditProfileClick} />
+        onChangeAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddCard={handleAddCardClick}
+      />
       <Footer />
 
 
@@ -92,7 +74,7 @@ function App() {
       <PopupWithForm
         name={"edit"}
         title={"Редактировать профиль"}
-        openPopup={openedPopupEditProfile}
+        openPopup={isOpenedPopupEditProfile}
         closePopup={closePopups}
       >
 
@@ -166,9 +148,26 @@ function App() {
       </div> */}
 
 
+      <PopupWithForm
+        name={"avatar"}
+        title={"Обновить аватар"}
+        openPopup={isOpenedPopupChangeAvatar}
+        closePopup={closePopups}
+      >
+        <input
+          id="link-avatar"
+          type="url"
+          name="avatarLink"
+          placeholder="Ссылка на картинку"
+          className="popup__input popup__input_link"
+          required />
+        <span className="popup__error popup__error_link-avatar">
+        </span>
+      </PopupWithForm>
+
       {/* ИЗМЕНИТЬ АВАТАР */}
       {/* <div className="popup popup_avatar popup_opened"> */}
-      <div className="popup popup_avatar">
+      {/* <div className="popup popup_avatar">
         <div className="popup__container">
           <h2 className="popup__title">Обновить аватар</h2>
           <form className="popup__form popup__form_avatar"
@@ -199,7 +198,7 @@ function App() {
           >
           </button>
         </div>
-      </div>
+      </div> */}
 
 
 
@@ -245,7 +244,7 @@ function App() {
             name="button-close"
             aria-label="Закрыть окно"
             className="popup__close popup__close_add links"
-            onClick={handleAddPlaceClick}></button>
+            onClick={handleAddCardClick}></button>
         </div>
       </div>
 

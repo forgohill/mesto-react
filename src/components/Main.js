@@ -5,7 +5,7 @@ import {
   profileAvatar,
 } from '../utils/images.js'
 
-function Main({ handleEditProfileClick }) {
+function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
 
   return (
 
@@ -22,7 +22,7 @@ function Main({ handleEditProfileClick }) {
             <button
               type="button"
               className="profile__avatar-button links"
-            // onClick={handleEditAvatarClick}
+              onClick={onChangeAvatar}
             ></button>
           </div>
           <div className="profile__wrapper">
@@ -33,7 +33,7 @@ function Main({ handleEditProfileClick }) {
               name="button-edit"
               aria-label="Редактировать профиль"
               className="profile__btn-edit links"
-              onClick={handleEditProfileClick}
+              onClick={onEditProfile}
             ></button>
           </div>
         </div>
