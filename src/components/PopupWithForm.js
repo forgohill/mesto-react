@@ -2,12 +2,12 @@ import React from 'react';
 
 function PopupWithForm({ name, title, openPopup, closePopup, ...props }) {
 
-  console.log(name);
-  console.log(title);
-  console.log(openPopup);
-  console.log(closePopup);
+  // console.log(name);
+  // console.log(title);
+  // console.log(openPopup);
+  // console.log(closePopup);
 
-  console.log(props.children);
+  // console.log(props.children);
 
   return (
 

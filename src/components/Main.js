@@ -11,10 +11,10 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
-
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    // console.log(userName);
+    console.log(cards);
 
     api.getUserInfo()
       .then((data) => {
@@ -28,6 +28,47 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
     return () => {
     };
   }, []);
+
+
+
+  React.useEffect(() => {
+    console.log(cards);
+    api.getCards()
+      .then((data) => {
+        console.log(data);
+        setCards(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+
+    return () => {
+    };
+  }, []);
+
+
+
+  const cardList = cards.map((item) => {
+    return (
+      <article className="grid-places__cards cards"
+        key={item._id}
+      >
+        <img
+          alt="Место загруженное пользователем"
+          className="cards__image"
+          src={item.link} />
+        <div className="cards__wrapper">
+          <h2 className="cards__title">{item.name}</h2>
+          <div className="cards__container-like">
+            <button type="button" aria-label="Понравилось" className="cards__btn-like"></button>
+            <p className="cards__counter-like">{item.likes.length}</p>
+          </div>
+        </div>
+        <button className="cards__trash links"></button>
+      </article>
+    )
+  });
+
 
   return (
 
@@ -72,7 +113,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
       </section>
 
       <section className="grid-places">
-        <p className="footer__paragraph">КАРТОЧКИ</p>
+        {cardList}
       </section>
 
 
