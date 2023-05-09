@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   headerLogo,
-  profileAvatar,
+  // profileAvatar,
 } from '../utils/images.js'
 
 
@@ -12,7 +12,7 @@ function ImagePopup() {
       <div className="popup popup_preview popup_opened">
         <figure className="popup__figure">
           <img
-            src={profileAvatar}
+            // src={profileAvatar}
             alt="Место"
             className="popup__image" />
           <figcaption

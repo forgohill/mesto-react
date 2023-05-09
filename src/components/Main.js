@@ -4,7 +4,7 @@ import api from '../utils/api'
 
 import {
   headerLogo,
-  profileAvatar,
+  // profileAvatar,
 } from '../utils/images.js'
 
 function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
@@ -14,7 +14,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
 
 
   React.useEffect(() => {
-    console.log(userName);
+    // console.log(userName);
 
     api.getUserInfo()
       .then((data) => {
@@ -36,11 +36,14 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
       <section className="profile">
         <div className="profile__container">
           <div className="profile__wrapper-avatar">
-
-            <img
+            <div
+              className="profile__avatar"
+              style={{ backgroundImage: `url(${userAvatar})` }}
+            ></div>
+            {/* <img
               src={userAvatar}
               alt="Жак-Ив-Кусто. Фотография. Пртрет."
-              className="profile__avatar" />
+              className="profile__avatar" /> */}
             <button
               type="button"
               className="profile__avatar-button links"

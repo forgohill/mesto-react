@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   headerLogo,
-  profileAvatar,
+  // profileAvatar,
 } from '../utils/images.js'
 
 
