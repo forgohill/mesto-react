@@ -1,11 +1,33 @@
 import React from 'react';
 
+import api from '../utils/api'
+
 import {
   headerLogo,
   profileAvatar,
 } from '../utils/images.js'
 
 function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
+
+
+  React.useEffect(() => {
+    console.log(userName);
+
+    api.getUserInfo()
+      .then((data) => {
+        setUserName(data.name);
+        setUserDescription(data.about);
+        setUserAvatar(data.avatar)
+      }).catch((err) => {
+        console.error(err);
+      })
+
+    return () => {
+    };
+  }, []);
 
   return (
 
@@ -16,7 +38,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
           <div className="profile__wrapper-avatar">
 
             <img
-              src={profileAvatar}
+              src={userAvatar}
               alt="Жак-Ив-Кусто. Фотография. Пртрет."
               className="profile__avatar" />
             <button
@@ -26,8 +48,8 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
             ></button>
           </div>
           <div className="profile__wrapper">
-            <h1 className="profile__name">forgohill</h1>
-            <p className="profile__mission">quick.action.lab</p>
+            <h1 className="profile__name">{userName}</h1>
+            <p className="profile__mission">{userDescription}</p>
             <button
               type="button"
               name="button-edit"

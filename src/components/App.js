@@ -5,6 +5,7 @@ import Main from './Main'
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm'
 import ImagePopup from './ImagePopup'
+// import api from '../utils/api'
 
 function App() {
 
@@ -12,7 +13,6 @@ function App() {
   const [isOpenedPopupChangeAvatar, setIsOpenedPopupChangeAvatar] = React.useState(false);
   const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
   const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
-
 
 
 
