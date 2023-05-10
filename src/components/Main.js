@@ -3,12 +3,7 @@ import React from 'react';
 import api from '../utils/api'
 import Card from './Card'
 
-import {
-  headerLogo,
-  // profileAvatar,
-} from '../utils/images.js'
-
-function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
+function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -31,12 +26,9 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
   }, []);
 
 
-
   React.useEffect(() => {
-    console.log(cards);
     api.getCards()
       .then((data) => {
-        // console.log(data);
         setCards(data);
       })
       .catch((err) => {
@@ -47,11 +39,11 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
     };
   }, []);
 
-
-
   const cardList = cards.map((item) => {
     return (
       (<Card
+        key={item._id}
+        onSelectedCard={onSelectedCard}
         item={item}
       />)
     )
@@ -69,10 +61,6 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
               className="profile__avatar"
               style={{ backgroundImage: `url(${userAvatar})` }}
             ></div>
-            {/* <img
-              src={userAvatar}
-              alt="Жак-Ив-Кусто. Фотография. Пртрет."
-              className="profile__avatar" /> */}
             <button
               type="button"
               className="profile__avatar-button links"
@@ -103,7 +91,6 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard }) {
       <section className="grid-places">
         {cardList}
       </section>
-
 
     </main >
   );

@@ -2,20 +2,13 @@ import React from 'react';
 
 function PopupWithForm({ name, title, openPopup, closePopup, ...props }) {
 
-  // console.log(name);
-  // console.log(title);
-  // console.log(openPopup);
-  // console.log(closePopup);
-
-  // console.log(props.children);
-
   return (
 
     <div className={`popup popup_${name} ${openPopup && "popup_opened"}`}>
       <div className="popup__container">
         <h2 className="popup__title">{title}</h2>
         <form className="popup__form popup__form_edit"
-          name="popupForm"
+          name={`popup${name}`}
           method="post"
           noValidate>
 

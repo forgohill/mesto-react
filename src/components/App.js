@@ -5,7 +5,6 @@ import Main from './Main'
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm'
 import ImagePopup from './ImagePopup'
-// import api from '../utils/api'
 
 function App() {
 
@@ -14,7 +13,8 @@ function App() {
   const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
   const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
 
-
+  // стейт карточки
+  const [SelectedCard, setSelectedCard] = React.useState(null);
 
   // блок обработчиков кнопок
   const handleEditAvatarClick = () => {
@@ -29,10 +29,15 @@ function App() {
     setIsOpenedPopupAddCard(true);
   }
 
+  const handleCardImageClick = (item) => {
+    setSelectedCard(item);
+  }
+
   const closeAllPopups = () => {
     setIsOpenedPopupChangeAvatar(false);
     setIsOpenedPopupEditProfile(false);
     setIsOpenedPopupAddCard(false);
+    setSelectedCard(null);
   }
 
   return (
@@ -42,31 +47,17 @@ function App() {
         onChangeAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddCard={handleAddCardClick}
+        onSelectedCard={handleCardImageClick}
       />
       <Footer />
 
-      {/* ДОБАВИТЬ ПРЕВЬЮ */}
-      {/* <div className="popup popup_preview popup_opened"> */}
-      {/* <div className="popup popup_preview">
-        <figure className="popup__figure">
-          <img
-            alt="Место"
-            className="popup__image" />
-          <figcaption
-            className="popup__figcaption">Пицунда</figcaption>
-          <button
-            type="button"
-            name="button-close"
-            aria-label="Закрыть окно"
-            className="popup__close popup__close_edit links"></button>
-        </figure>
-      </div> */}
-      {/* <ImagePopup></ImagePopup> */}
-
-
+      {/* ПРЕВЬЮХА */}
+      <ImagePopup
+        card={SelectedCard}
+        closePopup={closeAllPopups}
+      ></ImagePopup>
 
       {/* РЕДАКТИРОВАТЬ */}
-
       <PopupWithForm
         name={"edit"}
         title={"Редактировать профиль"}
@@ -95,7 +86,6 @@ function App() {
           required />
         <span className="popup__error popup__error_mission">
         </span>
-
       </PopupWithForm >
 
 
@@ -116,8 +106,6 @@ function App() {
         <span className="popup__error popup__error_link-avatar">
         </span>
       </PopupWithForm>
-
-
 
       {/* ДОБАВИТЬ КАРТОЧКУ */}
       <PopupWithForm
@@ -150,7 +138,6 @@ function App() {
 
 
       {/* УДАЛИТЬ КАРТОЧКУ */}
-      {/* <div className="popup popup_trash popup_opened"> */}
       <div className="popup popup_trash">
         <div className="popup__container">
           <h2 className="popup__title">Вы уверены?</h2>
@@ -176,41 +163,9 @@ function App() {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <template id="template">
-        <article className="grid-places__cards cards">
-          <img alt="Место загруженное пользователем" className="cards__image" />
-          <div className="cards__wrapper">
-            <h2 className="cards__title"></h2>
-            <div className="cards__container-like">
-              <button type="button" aria-label="Понравилось" className="cards__btn-like"></button>
-              <p className="cards__counter-like">0</p>
-            </div>
-          </div>
-          <button className="cards__trash links"></button>
-        </article>
-      </template>
-
-
-
-
-
     </div >
   );
 }
 
 export default App;
+
