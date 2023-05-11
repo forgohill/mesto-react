@@ -14,7 +14,7 @@ function App() {
   const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
 
   // стейт карточки
-  const [SelectedCard, setSelectedCard] = React.useState(null);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   // блок обработчиков кнопок
   const handleEditAvatarClick = () => {
@@ -53,8 +53,9 @@ function App() {
 
       {/* ПРЕВЬЮХА */}
       <ImagePopup
-        card={SelectedCard}
+        card={selectedCard}
         closePopup={closeAllPopups}
+
       ></ImagePopup>
 
       {/* РЕДАКТИРОВАТЬ */}
@@ -63,6 +64,7 @@ function App() {
         title={"Редактировать профиль"}
         openPopup={isOpenedPopupEditProfile}
         closePopup={closeAllPopups}
+        buttonText={'Сохранить'}
       >
 
         <input
@@ -95,6 +97,7 @@ function App() {
         title={"Обновить аватар"}
         openPopup={isOpenedPopupChangeAvatar}
         closePopup={closeAllPopups}
+        buttonText={'Сохранить'}
       >
         <input
           id="link-avatar"
@@ -113,6 +116,7 @@ function App() {
         title={"Новое место"}
         openPopup={isOpenedPopupAddCard}
         closePopup={closeAllPopups}
+        buttonText={'Создать'}
       >
         <input
           id="foto"

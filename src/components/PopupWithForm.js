@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PopupWithForm({ name, title, openPopup, closePopup, ...props }) {
+function PopupWithForm({ name, title, openPopup, closePopup, buttonText, ...props }) {
 
   return (
 
@@ -17,7 +17,7 @@ function PopupWithForm({ name, title, openPopup, closePopup, ...props }) {
           <button
             type="submit"
             aria-label="Сохранить изменения в профиле"
-            className="popup__submit">Сохранить</button>
+            className="popup__submit">{buttonText || 'Сохранить'}</button>
 
         </form>
 

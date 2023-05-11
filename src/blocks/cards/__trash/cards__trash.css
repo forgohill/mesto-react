@@ -12,6 +12,6 @@
   padding: 0;
   border: 0;
   outline: none;
-  background: url(../../../images/__basket.svg) center / 100% no-repeat transparent;
+  background: url(../../../images/basket.svg) center / 100% no-repeat transparent;
   cursor: pointer;
 }

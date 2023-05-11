@@ -8,7 +8,7 @@
   padding: 0;
   border: 0;
   outline: none;
-  background: url(../../../images/__like.svg) center / 100% no-repeat transparent;
+  background: url(../../../images/like.svg) center / 100% no-repeat transparent;
   cursor: pointer;
 }
 
