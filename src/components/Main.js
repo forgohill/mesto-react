@@ -10,8 +10,8 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    console.log(cards);
 
+    // API юзерИнфо
     api.getUserInfo()
       .then((data) => {
         setUserName(data.name);
@@ -21,12 +21,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
         console.error(err);
       })
 
-    return () => {
-    };
-  }, []);
-
-
-  React.useEffect(() => {
+    // API инициализация карточек
     api.getCards()
       .then((data) => {
         setCards(data);
@@ -35,9 +30,12 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
         console.error(err);
       })
 
+
     return () => {
     };
   }, []);
+
+
 
   const cardList = cards.map((item) => {
     return (
