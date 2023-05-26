@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   headerLogo,
-} from '../utils/images.js'
+} from '../../utils/images.js'
 
 
 function Header() {

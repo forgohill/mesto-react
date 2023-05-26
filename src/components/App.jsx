@@ -3,14 +3,15 @@ import React from 'react';
 import api from '../utils/api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-import Header from './Header';
-import Main from './Main'
-import Footer from './Footer';
-import PopupWithForm from './PopupWithForm'
-import ImagePopup from './ImagePopup'
+import Header from './Header/Header';
+import Main from './Main/Main'
+import Footer from './Footer/Footer';
+import PopupWithForm from './PopupWithForm/PopupWithForm'
+import ImagePopup from './ImagePopup/ImagePopup'
+import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
+
 
 function App() {
-
   // стейты для попапов
   const [isOpenedPopupChangeAvatar, setIsOpenedPopupChangeAvatar] = React.useState(false);
   const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
@@ -74,11 +75,11 @@ function App() {
 
   // удаляем карточку
   const handleCardDelete = (card) => {
-
-    // API удаляем  карточку где наажалив ведро
+    // API удаляем  карточку где нажали ведро
     api.deleteCard(card._id)
       .catch((err) => {
         console.error(err);
+
       });
 
     // обновляем стейт cards
@@ -88,6 +89,21 @@ function App() {
           return item !== card;
         })
     )
+
+  }
+
+  // изменяем данные юзера
+  const handleUpdateUser = ({ inputName, inputMission }) => {
+    // console.log({ inputName, inputMission });
+
+    api.patchUserInfo({ inputName, inputMission })
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      }).catch((err) => {
+        console.error(err);
+      });
+
 
   }
 
@@ -136,40 +152,16 @@ function App() {
         <ImagePopup
           card={selectedCard}
           closePopup={closeAllPopups}
-
         ></ImagePopup>
 
         {/* РЕДАКТИРОВАТЬ */}
-        <PopupWithForm
-          name={"edit"}
-          title={"Редактировать профиль"}
+        <EditProfilePopup
           openPopup={isOpenedPopupEditProfile}
           closePopup={closeAllPopups}
-          buttonText={'Сохранить'}
+          onUpdateUser={handleUpdateUser}
         >
+        </EditProfilePopup>
 
-          <input
-            id="name"
-            type="text"
-            minLength="2"
-            maxLength="40"
-            name="inputName"
-            placeholder="Имя"
-            className="popup__input popup__input_name" required />
-          <span className="popup__error popup__error_name">
-          </span>
-          <input
-            id="mission"
-            type="text"
-            minLength="2"
-            maxLength="200"
-            name="inputMission"
-            placeholder="О себе"
-            className="popup__input popup__input_mission"
-            required />
-          <span className="popup__error popup__error_mission">
-          </span>
-        </PopupWithForm >
 
 
         {/* ИЗМЕНИТЬ АВАТАР */}

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import api from '../utils/api'
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import api from '../../utils/api'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-import Card from './Card'
+import Card from '../Card/Card'
 
 function Main({
   onChangeAvatar,
@@ -50,6 +50,7 @@ function Main({
     )
   });
 
+  // глобальный контекст
   const currentUser = React.useContext(CurrentUserContext);
 
   // const { avatar, about, name } = currentUser;
