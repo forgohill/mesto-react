@@ -1,13 +1,22 @@
 import React from 'react';
 
 import api from '../utils/api'
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 import Card from './Card'
 
 function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
+
+  // блок стейтов
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
+
+  // user Context
+  const currentUser = React.useContext(CurrentUserContext);
+
+  console.log(currentUser);
 
   React.useEffect(() => {
 
