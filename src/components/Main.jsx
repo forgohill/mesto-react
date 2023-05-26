@@ -5,46 +5,38 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Card from './Card'
 
-function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
+function Main({
+  onChangeAvatar,
+  onEditProfile,
+  onAddCard,
+  onSelectedCard,
+  onCardLike,
+  onCardDelete,
+  cards }) {
 
   // блок стейтов
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
-
-  // user Context
-  const currentUser = React.useContext(CurrentUserContext);
-
-  console.log(currentUser);
-
-  React.useEffect(() => {
-
-    // API юзерИнфо
-    api.getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar)
-      }).catch((err) => {
-        console.error(err);
-      })
-
-    // API инициализация карточек
-    api.getCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+  // const [userName, setUserName] = React.useState('');
+  // const [userDescription, setUserDescription] = React.useState('');
+  // const [userAvatar, setUserAvatar] = React.useState('');
 
 
-    return () => {
-    };
-  }, []);
+
+  // React.useEffect(() => {
+
+  //   // API юзерИнфо
+  //   api.getUserInfo()
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setUserDescription(data.about);
+  //       setUserAvatar(data.avatar)
+  //     }).catch((err) => {
+  //       console.error(err);
+  //     })
 
 
+  //   return () => {
+  //   };
+  // }, []);
 
   const cardList = cards.map((item) => {
     return (
@@ -52,11 +44,17 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
         key={item._id}
         onSelectedCard={onSelectedCard}
         item={item}
+        onCardLike={onCardLike}
+        onCardDelete={onCardDelete}
       />)
     )
   });
 
+  const currentUser = React.useContext(CurrentUserContext);
 
+  // const { avatar, about, name } = currentUser;
+
+  // console.log(avatar);
   return (
 
     <main className="main">
@@ -66,7 +64,7 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
           <div className="profile__wrapper-avatar">
             <div
               className="profile__avatar"
-              style={{ backgroundImage: `url(${userAvatar})` }}
+              style={{ backgroundImage: `url(${currentUser.avatar})` }}
             ></div>
             <button
               type="button"
@@ -75,8 +73,8 @@ function Main({ onChangeAvatar, onEditProfile, onAddCard, onSelectedCard }) {
             ></button>
           </div>
           <div className="profile__wrapper">
-            <h1 className="profile__name">{userName}</h1>
-            <p className="profile__mission">{userDescription}</p>
+            <h1 className="profile__name">{currentUser.name}</h1>
+            <p className="profile__mission">{currentUser.about}</p>
             <button
               type="button"
               name="button-edit"

@@ -16,8 +16,11 @@ function App() {
   const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
   const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
 
+  // стетейт массив карточек
+  const [cards, setCards] = React.useState([]);
+
   // стейт Context
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState({});
 
   // стейт карточки
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -46,7 +49,51 @@ function App() {
     setSelectedCard(null);
   }
 
+  // ставим/удаляем Like
+  const handleCardLike = (card) => {
+    const isLiked = card.likes
+      .some((item) => {
+        return item._id === currentUser._id;
+      });
+
+    // API проверка на true/false и отправка лайка либо снятие
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards(
+          (state) => state.map(
+            (item) => {
+              return (item._id === card._id
+                ? newCard
+                : item)
+            }));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // удаляем карточку
+  const handleCardDelete = (card) => {
+
+    // API удаляем  карточку где наажалив ведро
+    api.deleteCard(card._id)
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // обновляем стейт cards
+    setCards(
+      cards
+        .filter((item) => {
+          return item !== card;
+        })
+    )
+
+  }
+
   React.useEffect(() => {
+
+    // API получения и запись стейта текущийЮзер
     api.getUserInfo()
       .then((data) => {
         setCurrentUser(data);
@@ -55,9 +102,19 @@ function App() {
         console.error(err);
       });
 
+    // API инициалищируем карточки
+    api.getCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+
+
   }, []);
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
   return (
     <div className="page">
@@ -69,6 +126,9 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddCard={handleAddCardClick}
           onSelectedCard={handleCardImageClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
         />
         <Footer />
 

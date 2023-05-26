@@ -76,6 +76,28 @@ class Api {
         return this._checkError(res);
       })
   }
+
+  changeLikeCardStatus(likeId, status) {
+    if (status) {
+      return fetch(`${this._url}cards/${likeId}/likes`, {
+        method: 'PUT',
+        headers: this._headers,
+      })
+        .then((res) => {
+          return this._checkError(res);
+        })
+    } else {
+      return fetch(`${this._url}cards/${likeId}/likes`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+        .then((res) => {
+          return this._checkError(res);
+        })
+    }
+
+  }
+
   putLikeCard(likeId) {
     return fetch(`${this._url}cards/${likeId}/likes`, {
       method: 'PUT',
