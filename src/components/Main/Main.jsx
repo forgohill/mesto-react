@@ -27,9 +27,6 @@ function Main({
   // глобальный контекст
   const currentUser = React.useContext(CurrentUserContext);
 
-  // const { avatar, about, name } = currentUser;
-
-  // console.log(avatar);
   return (
 
     <main className="main">

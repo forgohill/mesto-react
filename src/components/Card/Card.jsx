@@ -23,18 +23,12 @@ function Card({
     onCardDelete(item);
   }
 
-
-
-  // console.log(item)
   const isOwn = item.owner._id === currentUser._id;
   const isLiked = item.likes.some(i => i._id === currentUser._id);
 
   const cardLikeButtonClassName = (
     `cards__btn-like ${isLiked && 'cards__btn-like_active'}`
   );
-
-  // console.log(isOwn);
-  // console.log(isLiked);
 
   return (
 
@@ -59,7 +53,6 @@ function Card({
         </div>
       </div>
       {isOwn && <button className="cards__trash links" onClick={handleDeleteClick}></button>};
-      {/* <button className="cards__trash links"></button> */}
     </article>
 
   );

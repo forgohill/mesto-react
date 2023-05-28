@@ -12,8 +12,6 @@ class Api {
     this._headers = config.headers;
   }
 
-
-
   _checkError(res) {
     if (res.ok) { return res.json(); }
     else {

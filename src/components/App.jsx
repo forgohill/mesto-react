@@ -2,11 +2,9 @@ import React from 'react';
 
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
-// import PopupWithForm from './PopupWithForm/PopupWithForm';
 import ImagePopup from './ImagePopup/ImagePopup';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx';
@@ -95,7 +93,6 @@ function App() {
 
   // изменяем данные юзера
   const handleUpdateUser = ({ inputName, inputMission }) => {
-    // console.log({ inputName, inputMission });
 
     // API отправляем данные для изменения имени и описания
     api.patchUserInfo({ inputName, inputMission })
@@ -124,21 +121,14 @@ function App() {
       });
   }
 
-
-  // { name: data.inputFoto, link: data.inputLink }
   const handleUpdateCards = (data) => {
-    console.log(data);
 
     api.setCard(data)
       .then((data) => {
         setCards([data, ...cards]);
-        console.log(cards);
-        console.log(data);
-
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
         console.error(err);
       });
   }
@@ -197,10 +187,7 @@ function App() {
         >
         </EditProfilePopup>
 
-
-
         {/* ИЗМЕНИТЬ АВАТАР */}
-
         <EditAvatarPopup
           openPopup={isOpenedPopupChangeAvatar}
           closePopup={closeAllPopups}
@@ -209,7 +196,6 @@ function App() {
 
 
         {/* ДОБАВИТЬ КАРТОЧКУ */}
-
         <AddPlacePopup
           openPopup={isOpenedPopupAddCard}
           closePopup={closeAllPopups}

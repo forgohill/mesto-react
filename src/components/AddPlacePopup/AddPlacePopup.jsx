@@ -6,20 +6,12 @@ function AddPlacePopup({ openPopup, closePopup, onUpdateCards }) {
   const [inputFhoto, setInputFhoto] = React.useState('');
   const [inputLink, setInputLink] = React.useState('');
 
-  // console.log(onUpdateCards);
-
-
-  // { name: data.inputFoto, link: data.inputLink }
   const handleInputFhotoChange = (e) => {
-    // console.log(e.target.value);
     setInputFhoto(e.target.value);
-    console.log(inputFhoto);
   }
 
   const handleInputLinkChange = (e) => {
-    // console.log(e.target.value);
     setInputLink(e.target.value);
-    console.log(inputLink);
   }
 
   const handleAddPlaceSubmit = (e) => {
