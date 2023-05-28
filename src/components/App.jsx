@@ -9,6 +9,7 @@ import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm'
 import ImagePopup from './ImagePopup/ImagePopup'
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
+import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx'
 
 
 function App() {
@@ -96,16 +97,33 @@ function App() {
   const handleUpdateUser = ({ inputName, inputMission }) => {
     // console.log({ inputName, inputMission });
 
+    // API отправляем данные для изменения имени и описания
     api.patchUserInfo({ inputName, inputMission })
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.error(err);
       });
-
-
   }
+
+  // обновляем Аватар
+  const handleUpdateAvatar = ({ avatarLink }) => {
+    console.log({ avatarLink });
+
+    // API отправляем данные для изменения Ававтара
+    api.patchAvatar({ avatarLink })
+      .then((data) => {
+        console.log(data);
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
 
   React.useEffect(() => {
 
@@ -165,23 +183,13 @@ function App() {
 
 
         {/* ИЗМЕНИТЬ АВАТАР */}
-        <PopupWithForm
-          name={"avatar"}
-          title={"Обновить аватар"}
+
+        <EditAvatarPopup
           openPopup={isOpenedPopupChangeAvatar}
           closePopup={closeAllPopups}
-          buttonText={'Сохранить'}
-        >
-          <input
-            id="link-avatar"
-            type="url"
-            name="avatarLink"
-            placeholder="Ссылка на картинку"
-            className="popup__input popup__input_link"
-            required />
-          <span className="popup__error popup__error_link-avatar">
-          </span>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        ></EditAvatarPopup >
+
 
         {/* ДОБАВИТЬ КАРТОЧКУ */}
         <PopupWithForm

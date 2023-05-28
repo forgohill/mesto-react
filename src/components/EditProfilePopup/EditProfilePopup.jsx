@@ -32,10 +32,12 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
     // debugger;
     e.preventDefault();
 
-    onUpdateUser({
-      inputName,
-      inputMission,
-    })
+    onUpdateUser(
+      {
+        inputName,
+        inputMission,
+      }
+    )
   }
 
   return (
