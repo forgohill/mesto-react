@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm'
 
-function AddPlacePopup({ openPopup, closePopup, onUpdateCards }) {
+function AddPlacePopup({ openPopup, closePopup, onUpdateCards, onDisabled }) {
 
   const [inputFhoto, setInputFhoto] = React.useState('');
   const [inputLink, setInputLink] = React.useState('');
@@ -23,6 +23,12 @@ function AddPlacePopup({ openPopup, closePopup, onUpdateCards }) {
     });
   }
 
+  React.useEffect(() => {
+    setInputFhoto('');
+    setInputLink('');
+
+  }, [openPopup]);
+
   return (
 
     <PopupWithForm
@@ -32,9 +38,11 @@ function AddPlacePopup({ openPopup, closePopup, onUpdateCards }) {
       closePopup={closePopup}
       buttonText={'Создать'}
       onSubmit={handleAddPlaceSubmit}
+      disabled={onDisabled}
 
     >
       <input
+        value={inputFhoto}
         id="foto"
         type="text"
         minLength="2"
@@ -47,6 +55,7 @@ function AddPlacePopup({ openPopup, closePopup, onUpdateCards }) {
       <span className="popup__error popup__error_foto">
       </span>
       <input
+        value={inputLink}
         id="link"
         type="url"
         name="inputLink"

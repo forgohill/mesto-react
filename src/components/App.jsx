@@ -10,11 +10,14 @@ import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx';
 import AddPlacePopup from './AddPlacePopup/AddPlacePopup.jsx';
 
+import DeletePlacePopup from './DeletePlacePopup/DeletePlacePopup.jsx';
+
 function App() {
   // стейты для попапов
   const [isOpenedPopupChangeAvatar, setIsOpenedPopupChangeAvatar] = React.useState(false);
   const [isOpenedPopupEditProfile, setIsOpenedPopupEditProfile] = React.useState(false);
   const [isOpenedPopupAddCard, setIsOpenedPopupAddCard] = React.useState(false);
+  const [isOpenedPopupConfirmDeleteCard, setIsOpenedPopupConfirmDeleteCard] = React.useState(false);
 
   // стетейт массив карточек
   const [cards, setCards] = React.useState([]);
@@ -25,17 +28,46 @@ function App() {
   // стейт карточки
   const [selectedCard, setSelectedCard] = React.useState(null);
 
+  // стейт для хранения карточки для удаления
+  const [selectedConfirmDeleteCard, setSelectedConfirmDeleteCard] = React.useState(null);
+
+  // стейт enable/disable
+  const [isDisabled, setIsDisabled] = React.useState(false);
+
   // блок обработчиков кнопок
   const handleEditAvatarClick = () => {
     setIsOpenedPopupChangeAvatar(true);
   }
 
   const handleEditProfileClick = () => {
+    setIsDisabled(false);
     setIsOpenedPopupEditProfile(true);
   }
 
   const handleAddCardClick = () => {
+    setIsDisabled(false);
     setIsOpenedPopupAddCard(true);
+
+  }
+
+  // нажатие ДА в попап удалить Карточку
+  const handleConfirmDeleteCardClick = () => {
+
+    // API удаляем  карточку где нажали ведро
+    api.deleteCard(selectedConfirmDeleteCard._id)
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // обновляем стейт cards
+    setCards(
+      cards
+        .filter((item) => {
+          return item !== selectedConfirmDeleteCard;
+        })
+    );
+
+    closeAllPopups();
   }
 
   const handleCardImageClick = (item) => {
@@ -46,7 +78,9 @@ function App() {
     setIsOpenedPopupChangeAvatar(false);
     setIsOpenedPopupEditProfile(false);
     setIsOpenedPopupAddCard(false);
+    setIsOpenedPopupConfirmDeleteCard(false);
     setSelectedCard(null);
+    setSelectedConfirmDeleteCard(null);
   }
 
   // ставим/удаляем Like
@@ -74,26 +108,13 @@ function App() {
 
   // удаляем карточку
   const handleCardDelete = (card) => {
-    // API удаляем  карточку где нажали ведро
-    api.deleteCard(card._id)
-      .catch((err) => {
-        console.error(err);
-
-      });
-
-    // обновляем стейт cards
-    setCards(
-      cards
-        .filter((item) => {
-          return item !== card;
-        })
-    )
-
+    setSelectedConfirmDeleteCard(card);
+    setIsOpenedPopupConfirmDeleteCard(true);
   }
 
   // изменяем данные юзера
   const handleUpdateUser = ({ inputName, inputMission }) => {
-
+    setIsDisabled(true);
     // API отправляем данные для изменения имени и описания
     api.patchUserInfo({ inputName, inputMission })
       .then((data) => {
@@ -102,6 +123,7 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
+        setIsDisabled(false);
       });
   }
 
@@ -122,7 +144,7 @@ function App() {
   }
 
   const handleUpdateCards = (data) => {
-
+    setIsDisabled(true);
     api.setCard(data)
       .then((data) => {
         setCards([data, ...cards]);
@@ -130,7 +152,9 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
+        setIsDisabled(false);
       });
+
   }
 
   // первая инициализация данных с сервера
@@ -184,6 +208,7 @@ function App() {
           openPopup={isOpenedPopupEditProfile}
           closePopup={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          onDisabled={isDisabled}
         >
         </EditProfilePopup>
 
@@ -200,36 +225,19 @@ function App() {
           openPopup={isOpenedPopupAddCard}
           closePopup={closeAllPopups}
           onUpdateCards={handleUpdateCards}
+          onDisabled={isDisabled}
         >
         </AddPlacePopup >
 
-
-
         {/* УДАЛИТЬ КАРТОЧКУ */}
-        <div className="popup popup_trash">
-          <div className="popup__container">
-            <h2 className="popup__title">Вы уверены?</h2>
+        <DeletePlacePopup
+          openPopup={isOpenedPopupConfirmDeleteCard}
+          closePopup={closeAllPopups}
+          onConfirmDeleteCard={handleConfirmDeleteCardClick}
+        >
+        </DeletePlacePopup>
 
-            <form
-              className="popup__form popup__form_trash"
-              name="popupForm"
-              method="post"
-              noValidate>
-              <button
-                type="submit"
-                aria-label="Удалить карарточку с картинкой"
-                className="popup__submit">
-                Да
-              </button>
 
-            </form>
-            <button
-              type="button"
-              name="button-close"
-              aria-label="Закрыть окно"
-              className="popup__close popup__close_delete links"></button>
-          </div>
-        </div>
       </CurrentUserContext.Provider>
 
     </div >
@@ -237,4 +245,5 @@ function App() {
 }
 
 export default App;
+
 

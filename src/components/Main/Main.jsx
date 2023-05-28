@@ -7,6 +7,7 @@ function Main({
   onChangeAvatar,
   onEditProfile,
   onAddCard,
+  onConfirmDeleteCard,
   onSelectedCard,
   onCardLike,
   onCardDelete,
@@ -20,6 +21,7 @@ function Main({
         item={item}
         onCardLike={onCardLike}
         onCardDelete={onCardDelete}
+        onConfirmDeleteCard={onConfirmDeleteCard}
       />)
     )
   });

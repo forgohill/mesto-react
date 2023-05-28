@@ -3,10 +3,6 @@ import React from 'react';
 function ImagePopup({ card, closePopup }) {
 
 
-  React.useEffect(() => {
-    console.log(card);
-  }, [card]);
-
   return (
     card &&
     <div className={`popup popup_preview ${card ? "popup_opened" : ""}`}>

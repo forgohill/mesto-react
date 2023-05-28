@@ -7,10 +7,11 @@ function PopupWithForm({
   closePopup,
   buttonText,
   onSubmit,
+  disabled,
   ...props }) {
 
   return (
-    <div className={`popup popup_${name} ${openPopup && "popup_opened"}`}>
+    <div className={`popup popup_${name} ${openPopup ? "popup_opened" : ""}`}>
       <div className="popup__container">
         <h2 className="popup__title">{title}</h2>
 
@@ -22,6 +23,7 @@ function PopupWithForm({
           {props.children}
 
           <button
+            disabled={disabled}
             type="submit"
             aria-label="Сохранить изменения в профиле"
             className="popup__submit">{buttonText || 'Сохранить'}</button>
@@ -32,7 +34,10 @@ function PopupWithForm({
           name="button-close"
           aria-label="Закрыть окно"
           className="popup__close popup__close_edit links"
-          onClick={closePopup}>
+          onClick={closePopup}
+
+        >
+
         </button>
 
       </div>

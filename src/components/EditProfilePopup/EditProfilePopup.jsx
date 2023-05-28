@@ -3,7 +3,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
-function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
+function EditProfilePopup({ openPopup, closePopup, onUpdateUser, onDisabled }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -11,8 +11,7 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
   React.useEffect(() => {
     setInputName(currentUser.name);
     setInputMission(currentUser.about);
-  }, [currentUser]);
-
+  }, [currentUser, openPopup]);
 
   const [inputName, setInputName] = React.useState('');
   const [inputMission, setInputMission] = React.useState('');
@@ -20,16 +19,13 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
 
   const handleInputNameChange = (e) => {
     setInputName(e.target.value);
-    // console.log(name);
   }
 
   const handleInputMissionChange = (e) => {
     setInputMission(e.target.value);
-    // console.log(description);
   }
 
   const handleSubmit = (e) => {
-    // debugger;
     e.preventDefault();
 
     onUpdateUser(
@@ -40,6 +36,13 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
     )
   }
 
+  // React
+  //   .useEffect(() => {
+  //     // console.log(currentUser);
+  //     setInputName(currentUser.name);
+  //     setInputMission(currentUser.about);
+  //   }, [openPopup]);
+
   return (
     <PopupWithForm
       name={"edit"}
@@ -47,11 +50,12 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
       openPopup={openPopup}
       closePopup={closePopup}
       buttonText={'Сохранить'}
-
       onSubmit={handleSubmit}
+      disabled={onDisabled}
     >
 
       <input
+        value={inputName || ''}
         id="name"
         type="text"
         minLength="2"
@@ -64,6 +68,7 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser }) {
       <span className="popup__error popup__error_name">
       </span>
       <input
+        value={inputMission || ''}
         id="mission"
         type="text"
         minLength="2"
