@@ -1,5 +1,3 @@
-import React from 'react';
-
 const configApi = {
   url: 'https://nomoreparties.co/v1/cohort-64/',
   headers: {
@@ -14,10 +12,13 @@ class Api {
     this._headers = config.headers;
   }
 
+
+
   _checkError(res) {
     if (res.ok) { return res.json(); }
     else {
-      return Promise.reject(`ПРОИЗОШЛА ОШИБКА: ${res.status}`)
+      return Promise.reject(`ПРОИЗОШЛА ОШИБКА: ${res.status} `)
+
     }
   }
 

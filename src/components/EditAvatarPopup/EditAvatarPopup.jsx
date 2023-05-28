@@ -5,13 +5,8 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm'
 function EditAvatarPopup({ openPopup, closePopup, onUpdateAvatar }) {
 
   const inputAvatarRef = React.useRef(null);
-  console.log(inputAvatarRef.value);
+  // console.log(inputAvatarRef.value);
 
-  // const [avatarLink, setAvatarLink] = React.useState('');
-
-  // const handlerAvatarLink = (e) => {
-  // console.log(e.target.value);
-  // }
 
   const handleSubmit = (e) => {
     // debugger;

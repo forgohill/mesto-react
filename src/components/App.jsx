@@ -1,16 +1,16 @@
 import React from 'react';
 
-import api from '../utils/api'
+import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Header from './Header/Header';
-import Main from './Main/Main'
+import Main from './Main/Main';
 import Footer from './Footer/Footer';
-import PopupWithForm from './PopupWithForm/PopupWithForm'
-import ImagePopup from './ImagePopup/ImagePopup'
-import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
-import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx'
-
+// import PopupWithForm from './PopupWithForm/PopupWithForm';
+import ImagePopup from './ImagePopup/ImagePopup';
+import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx';
+import AddPlacePopup from './AddPlacePopup/AddPlacePopup.jsx';
 
 function App() {
   // стейты для попапов
@@ -125,6 +125,25 @@ function App() {
   }
 
 
+  // { name: data.inputFoto, link: data.inputLink }
+  const handleUpdateCards = (data) => {
+    console.log(data);
+
+    api.setCard(data)
+      .then((data) => {
+        setCards([data, ...cards]);
+        console.log(cards);
+        console.log(data);
+
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.error(err);
+      });
+  }
+
+  // первая инициализация данных с сервера
   React.useEffect(() => {
 
     // API получения и запись стейта текущийЮзер
@@ -147,8 +166,6 @@ function App() {
 
 
   }, []);
-
-  // console.log(currentUser);
 
   return (
     <div className="page">
@@ -192,34 +209,14 @@ function App() {
 
 
         {/* ДОБАВИТЬ КАРТОЧКУ */}
-        <PopupWithForm
-          name={"add"}
-          title={"Новое место"}
+
+        <AddPlacePopup
           openPopup={isOpenedPopupAddCard}
           closePopup={closeAllPopups}
-          buttonText={'Создать'}
+          onUpdateCards={handleUpdateCards}
         >
-          <input
-            id="foto"
-            type="text"
-            minLength="2"
-            maxLength="30"
-            name="inputFoto"
-            placeholder="Название"
-            className="popup__input popup__input_foto"
-            required />
-          <span className="popup__error popup__error_foto">
-          </span>
-          <input
-            id="link"
-            type="url"
-            name="inputLink"
-            placeholder="Ссылка на картинку"
-            className="popup__input popup__input_link"
-            required />
-          <span className="popup__error popup__error_link">
-          </span>
-        </PopupWithForm>
+        </AddPlacePopup >
+
 
 
         {/* УДАЛИТЬ КАРТОЧКУ */}

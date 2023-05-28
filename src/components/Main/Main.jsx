@@ -1,6 +1,4 @@
 import React from 'react';
-
-import api from '../../utils/api'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import Card from '../Card/Card'
@@ -13,30 +11,6 @@ function Main({
   onCardLike,
   onCardDelete,
   cards }) {
-
-  // блок стейтов
-  // const [userName, setUserName] = React.useState('');
-  // const [userDescription, setUserDescription] = React.useState('');
-  // const [userAvatar, setUserAvatar] = React.useState('');
-
-
-
-  // React.useEffect(() => {
-
-  //   // API юзерИнфо
-  //   api.getUserInfo()
-  //     .then((data) => {
-  //       setUserName(data.name);
-  //       setUserDescription(data.about);
-  //       setUserAvatar(data.avatar)
-  //     }).catch((err) => {
-  //       console.error(err);
-  //     })
-
-
-  //   return () => {
-  //   };
-  // }, []);
 
   const cardList = cards.map((item) => {
     return (
