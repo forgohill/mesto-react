@@ -29,7 +29,10 @@
 * useEffect
 * createContext
 * useRef
+
+
 ![image](https://github.com/forgohill/mesto-react/blob/main/src/images/prew__st_1%400%2C75x.jpg)
+
 ###  Часть 1. Портирование на «Реакт».
 
 * Установка React-app с помощью npx
