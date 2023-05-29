@@ -1,24 +1,32 @@
 import React from 'react';
 
-function PopupWithForm({ name, title, openPopup, closePopup, buttonText, ...props }) {
+function PopupWithForm({
+  name,
+  title,
+  openPopup,
+  closePopup,
+  buttonText,
+  onSubmit,
+  disabled,
+  ...props }) {
 
   return (
-
-    <div className={`popup popup_${name} ${openPopup && "popup_opened"}`}>
+    <div className={`popup popup_${name} ${openPopup ? "popup_opened" : ""}`}>
       <div className="popup__container">
         <h2 className="popup__title">{title}</h2>
+
         <form className="popup__form popup__form_edit"
           name={`popup${name}`}
-          method="post"
-          noValidate>
-
+          method="post" noValidate
+          onSubmit={onSubmit}
+        >
           {props.children}
 
           <button
+            disabled={disabled}
             type="submit"
             aria-label="Сохранить изменения в профиле"
             className="popup__submit">{buttonText || 'Сохранить'}</button>
-
         </form>
 
         <button
@@ -26,12 +34,14 @@ function PopupWithForm({ name, title, openPopup, closePopup, buttonText, ...prop
           name="button-close"
           aria-label="Закрыть окно"
           className="popup__close popup__close_edit links"
-          onClick={closePopup}>
+          onClick={closePopup}
+
+        >
+
         </button>
 
       </div>
     </div>
-
   );
 }
 

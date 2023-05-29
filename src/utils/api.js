@@ -1,5 +1,3 @@
-import React from 'react';
-
 const configApi = {
   url: 'https://nomoreparties.co/v1/cohort-64/',
   headers: {
@@ -17,7 +15,8 @@ class Api {
   _checkError(res) {
     if (res.ok) { return res.json(); }
     else {
-      return Promise.reject(`ПРОИЗОШЛА ОШИБКА: ${res.status}`)
+      return Promise.reject(`ПРОИЗОШЛА ОШИБКА: ${res.status} `)
+
     }
   }
 
@@ -76,6 +75,28 @@ class Api {
         return this._checkError(res);
       })
   }
+
+  changeLikeCardStatus(likeId, status) {
+    if (status) {
+      return fetch(`${this._url}cards/${likeId}/likes`, {
+        method: 'PUT',
+        headers: this._headers,
+      })
+        .then((res) => {
+          return this._checkError(res);
+        })
+    } else {
+      return fetch(`${this._url}cards/${likeId}/likes`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+        .then((res) => {
+          return this._checkError(res);
+        })
+    }
+
+  }
+
   putLikeCard(likeId) {
     return fetch(`${this._url}cards/${likeId}/likes`, {
       method: 'PUT',
