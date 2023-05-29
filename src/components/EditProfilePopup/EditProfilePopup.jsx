@@ -36,13 +36,6 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser, onDisabled }) {
     )
   }
 
-  // React
-  //   .useEffect(() => {
-  //     // console.log(currentUser);
-  //     setInputName(currentUser.name);
-  //     setInputMission(currentUser.about);
-  //   }, [openPopup]);
-
   return (
     <PopupWithForm
       name={"edit"}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DeletePlacePopup({ openPopup, closePopup, onConfirmDeleteCard }) {
+function DeletePlacePopup({ openPopup, closePopup, onConfirmDeleteCard, onDisabled }) {
 
   // console.log(onConfirmDeleteCard);
   const handleOverlayClick = (e) => {
@@ -33,6 +33,7 @@ function DeletePlacePopup({ openPopup, closePopup, onConfirmDeleteCard }) {
             aria-label="Удалить карарточку с картинкой"
             className="popup__submit"
             onClick={handleButtonYesClick}
+            disabled={onDisabled}
           >
             Да
           </button>

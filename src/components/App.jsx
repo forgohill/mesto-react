@@ -36,6 +36,7 @@ function App() {
 
   // блок обработчиков кнопок
   const handleEditAvatarClick = () => {
+    setIsDisabled(false);
     setIsOpenedPopupChangeAvatar(true);
   }
 
@@ -52,11 +53,12 @@ function App() {
 
   // нажатие ДА в попап удалить Карточку
   const handleConfirmDeleteCardClick = () => {
-
+    setIsDisabled(true);
     // API удаляем  карточку где нажали ведро
     api.deleteCard(selectedConfirmDeleteCard._id)
       .catch((err) => {
         console.error(err);
+        setIsDisabled(false);
       });
 
     // обновляем стейт cards
@@ -108,6 +110,7 @@ function App() {
 
   // удаляем карточку
   const handleCardDelete = (card) => {
+    setIsDisabled(false);
     setSelectedConfirmDeleteCard(card);
     setIsOpenedPopupConfirmDeleteCard(true);
   }
@@ -129,22 +132,25 @@ function App() {
 
   // обновляем Аватар
   const handleUpdateAvatar = ({ avatarLink }) => {
-    console.log({ avatarLink });
+    setIsDisabled(true);
 
     // API отправляем данные для изменения Ававтара
     api.patchAvatar({ avatarLink })
       .then((data) => {
-        console.log(data);
         setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {
         console.error(err);
+        setIsDisabled(false);
       });
   }
 
+  // добавляем карточку
   const handleUpdateCards = (data) => {
     setIsDisabled(true);
+
+    // API отправляем данные новой карточки
     api.setCard(data)
       .then((data) => {
         setCards([data, ...cards]);
@@ -217,6 +223,7 @@ function App() {
           openPopup={isOpenedPopupChangeAvatar}
           closePopup={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          onDisabled={isDisabled}
         ></EditAvatarPopup >
 
 
@@ -234,6 +241,7 @@ function App() {
           openPopup={isOpenedPopupConfirmDeleteCard}
           closePopup={closeAllPopups}
           onConfirmDeleteCard={handleConfirmDeleteCardClick}
+          onDisabled={isDisabled}
         >
         </DeletePlacePopup>
 
