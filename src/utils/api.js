@@ -42,9 +42,10 @@ class Api {
         return this._checkError(res);
       })
   }
-
-  patchUserInfo({ inputName, inputMission }) {
-    const data = this._renamerUserInputApi({ inputName, inputMission });
+  // patchUserInfo({ inputName, inputMission }) {
+  patchUserInfo({ name, about }) {
+    // const data = this._renamerUserInputApi({ inputName, inputMission });
+    const data = { name, about };
     return fetch(`${this._url}users/me`, {
       method: 'PATCH',
       headers: this._headers,

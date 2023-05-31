@@ -51,29 +51,34 @@ function App() {
 
   }
 
-  // нажатие ДА в попап удалить Карточку
-  const handleConfirmDeleteCardClick = () => {
-    setIsDisabled(true);
-    // API удаляем  карточку где нажали ведро
-    api.deleteCard(selectedConfirmDeleteCard._id)
-      .catch((err) => {
-        console.error(err);
-        setIsDisabled(false);
-      });
 
-    // обновляем стейт cards
-    setCards(
-      cards
-        .filter((item) => {
-          return item !== selectedConfirmDeleteCard;
-        })
-    );
-
-    closeAllPopups();
-  }
-
+  // обработчик клика на карточку для открытия привью
   const handleCardImageClick = (item) => {
     setSelectedCard(item);
+  }
+
+  // закрытие по Escape
+  const isOpen = isOpenedPopupChangeAvatar || isOpenedPopupEditProfile || isOpenedPopupAddCard || isOpenedPopupConfirmDeleteCard || selectedCard;
+  React.useEffect(() => {
+    function closeByEscape(e) {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]);
+
+  // закрытие по оверлею
+  const handleOverlayClick = (e) => {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) {
+      closeAllPopups();
+    }
   }
 
   const closeAllPopups = () => {
@@ -116,10 +121,10 @@ function App() {
   }
 
   // изменяем данные юзера
-  const handleUpdateUser = ({ inputName, inputMission }) => {
+  const handleUpdateUser = ({ name, about }) => {
     setIsDisabled(true);
     // API отправляем данные для изменения имени и описания
-    api.patchUserInfo({ inputName, inputMission })
+    api.patchUserInfo({ name, about })
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
@@ -163,6 +168,29 @@ function App() {
 
   }
 
+
+  // нажатие ДА в попап удалить Карточку
+  const handleConfirmDeleteCardClick = () => {
+    setIsDisabled(true);
+
+    // API удаляем  карточку где нажали ведро
+    api.deleteCard(selectedConfirmDeleteCard._id)
+      .then((data) => {
+        // обновляем стейт cards
+        setCards(
+          cards
+            .filter((item) => {
+              return item !== selectedConfirmDeleteCard;
+            })
+        );
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsDisabled(false);
+      });
+  }
+
   // первая инициализация данных с сервера
   React.useEffect(() => {
 
@@ -183,8 +211,6 @@ function App() {
       .catch((err) => {
         console.error(err);
       })
-
-
   }, []);
 
   return (
@@ -207,7 +233,8 @@ function App() {
         <ImagePopup
           card={selectedCard}
           closePopup={closeAllPopups}
-        ></ImagePopup>
+          onOverlayClick={handleOverlayClick}
+        />
 
         {/* РЕДАКТИРОВАТЬ */}
         <EditProfilePopup
@@ -215,6 +242,7 @@ function App() {
           closePopup={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           onDisabled={isDisabled}
+          onOverlayClick={handleOverlayClick}
         >
         </EditProfilePopup>
 
@@ -223,6 +251,7 @@ function App() {
           openPopup={isOpenedPopupChangeAvatar}
           closePopup={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          onOverlayClick={handleOverlayClick}
           onDisabled={isDisabled}
         ></EditAvatarPopup >
 
@@ -232,6 +261,7 @@ function App() {
           openPopup={isOpenedPopupAddCard}
           closePopup={closeAllPopups}
           onUpdateCards={handleUpdateCards}
+          onOverlayClick={handleOverlayClick}
           onDisabled={isDisabled}
         >
         </AddPlacePopup >
@@ -241,6 +271,7 @@ function App() {
           openPopup={isOpenedPopupConfirmDeleteCard}
           closePopup={closeAllPopups}
           onConfirmDeleteCard={handleConfirmDeleteCardClick}
+          onOverlayClick={handleOverlayClick}
           onDisabled={isDisabled}
         >
         </DeletePlacePopup>
