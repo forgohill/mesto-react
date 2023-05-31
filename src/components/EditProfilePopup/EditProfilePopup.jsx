@@ -1,40 +1,31 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useForm } from '../../hooks/useForm';
 
 
-function EditProfilePopup({ openPopup, closePopup, onUpdateUser, onDisabled }) {
+function EditProfilePopup({
+  openPopup,
+  closePopup,
+  onUpdateUser,
+  onOverlayClick,
+  onDisabled }) {
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const { name, about } = React.useContext(CurrentUserContext);
 
-
-  React.useEffect(() => {
-    setInputName(currentUser.name);
-    setInputMission(currentUser.about);
-  }, [currentUser, openPopup]);
-
-  const [inputName, setInputName] = React.useState('');
-  const [inputMission, setInputMission] = React.useState('');
-
-
-  const handleInputNameChange = (e) => {
-    setInputName(e.target.value);
-  }
-
-  const handleInputMissionChange = (e) => {
-    setInputMission(e.target.value);
-  }
+  const { values, handleChange, setValues } = useForm({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    onUpdateUser(
-      {
-        inputName,
-        inputMission,
-      }
-    )
+    onUpdateUser(values)
   }
+
+  React.useEffect(() => {
+    if ({ name, about }) {
+      setValues({ name, about });
+    }
+
+  }, [openPopup, name, about]);
 
   return (
     <PopupWithForm
@@ -45,31 +36,33 @@ function EditProfilePopup({ openPopup, closePopup, onUpdateUser, onDisabled }) {
       buttonText={'Сохранить'}
       onSubmit={handleSubmit}
       disabled={onDisabled}
+      onOverlayClick={onOverlayClick}
+
     >
 
       <input
-        value={inputName || ''}
+        value={values.name ?? ''}
         id="name"
         type="text"
         minLength="2"
         maxLength="40"
-        name="inputName"
+        name="name"
         placeholder="Имя"
         className="popup__input popup__input_name" required
-        onChange={handleInputNameChange}
+        onChange={handleChange}
       />
       <span className="popup__error popup__error_name">
       </span>
       <input
-        value={inputMission || ''}
+        value={values.about ?? ''}
         id="mission"
         type="text"
         minLength="2"
         maxLength="200"
-        name="inputMission"
+        name="about"
         placeholder="О себе"
         className="popup__input popup__input_mission" required
-        onChange={handleInputMissionChange}
+        onChange={handleChange}
       />
       <span className="popup__error popup__error_mission">
       </span>
